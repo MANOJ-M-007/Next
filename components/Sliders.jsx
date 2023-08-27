@@ -21,7 +21,7 @@ const styles = {
   },
 };
 const Sliders = () => {
-  const [slidesToShow, setSlidesToShow] = useState(calculateSlidesToShow());
+  const [slidesToShow, setSlidesToShow] = useState(3);
 
   const divStyle = {
     padding: "50px",
@@ -48,23 +48,25 @@ const Sliders = () => {
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
   };
-  function calculateSlidesToShow() {
-    const screenWidth = window.innerWidth;
-
-    if (screenWidth >= 992) {
-      return 3;
-    } else if (screenWidth >= 768) {
-      return 2;
-    } else {
-      return 1;
-    }
-  }
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      function calculateSlidesToShow() {
+        const screenWidth = window.innerWidth;
+
+        if (screenWidth >= 992) {
+          return 3;
+        } else if (screenWidth >= 768) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+
       function handleResize() {
         setSlidesToShow(calculateSlidesToShow());
       }
-  
+
+      handleResize(); // Initial calculation
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }
